@@ -36,3 +36,10 @@ var game = new Phaser.Game(640, 480, Phaser.AUTO, 'gameDiv');
 // And finally we tell Phaser to add and start our 'main' state
 game.state.add('main', mainState);
 game.state.start('main');
+
+
+//if points > 5 -> ball go faster in level 2
+//if points > 5 -> ball expands 10 times bigger than it was originally
+//if points > 5 -> ball doubles in the game
+//if points > 5 -> the screen blacks out every 5 seconds
+//
