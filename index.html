@@ -1,15 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>[insert clever title]</title>
+        <title>INCREASINGLY WEIRD PONG</title>
         <link rel="stylesheet" href="game.css">
+        <!-- the last script to be loaded should be the script that the game starts on -->
+        <script src="assets/phaser/phaser.js"></script>
+        <script src="titleScreen.js"></script>
+        <script src="game.js"></script>
+        <script src="options.js"></script>
+        <script src="main.js"></script>
     </head>
     <body>
         <header>
-            <h1 class="title">[insert clever title]</h1>
+            <h1 class="title">INCREASINGLY WEIRD PONG</h1>
         </header>
         <div id="gameDiv" class="game-area"></div>
-        <script src="assets/phaser/phaser.js"></script>
-        <script src="game.js"></script>
+        </script>
     </body>
 </html>
