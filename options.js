@@ -1,7 +1,7 @@
 var Options = {
     
     preload : function() {
-        game.load.image('optionsTitle', '/assets/images/options.png')
+        game.load.image('optionsTitle', '/assets/images/options.jpg')
     },
     
     create: function () { 
