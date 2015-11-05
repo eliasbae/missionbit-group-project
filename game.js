@@ -1,3 +1,6 @@
+var currentVelocity = 200;
+var time = 0;
+
 var Game = {
     
     preload : function() {
@@ -21,10 +24,18 @@ var Game = {
         this.ball = game.add.sprite(300, 240, 'ball');
         game.physics.arcade.enable(this.ball);
         this.ball.body.velocity.x = 200;
-        this.ball.body.velocity.y = 200;
+        this.ball.body.velocity.y = 2
+        00;
         this.ball.body.collideWorldBounds = true;
         this.ball.body.bounce.x = 1;
         this.ball.body.bounce.y = 1;
+        
+        this.wasd = {
+            up: game.input.keyboard.addKey(Phaser.Keyboard.W),
+            down: game.input.keyboard.addKey(Phaser.Keyboard.S),
+            left: game.input.keyboard.addKey(Phaser.Keyboard.A),
+            right: game.input.keyboard.addKey(Phaser.Keyboard.D)
+        }
     },
     
     update: function() {
@@ -35,10 +46,38 @@ var Game = {
         } else { 
             this.paddle1.body.velocity.y = 0;
         }
+        
+        if (this.wasd.up.isDown) {
+            this.paddle2.body.velocity.y = -350;
+        } else if (this.wasd.down.isDown) {
+            this.paddle2.body.velocity.y = 350;
+        } else {
+            this.paddle2.body.velocity.y = 0;
+        }
+        
+        if (this.ball.body.velocity.x > currentVelocity || this.ball.body.velocity.y > currentVelocity) {
+            this.ball.body.velocity.x = currentVelocity;
+            this.ball.body.velocity.y = currentVelocity;
+        }
         game.physics.arcade.collide(this.paddle1, this.ball);
         game.physics.arcade.collide(this.paddle2, this.ball);
         
-        }
+//        if (score > 9) {
+//            if (time > 600) {
+//                var bsize = game.rnd.realInRange(-2, 6);
+//                this.ball.scale.setTo(bsize, bsize);
+//                time = 0;
+//            }
+//            time++;
+//        }
+        
+        //won't work until scoring process implemented
+//        if (score > 4) {
+//            this.ball.body.velocity.x = 500;
+//            this.ball.body.velocity.y = 500;
+//            currentVelocity = 500;
+//        }
+    }
+    
 
 };
-  
