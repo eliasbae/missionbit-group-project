@@ -1,6 +1,8 @@
-
 var score1 = 0;
 var score2 = 0;
+
+var currentVelocity = 200;
+var time = 0;
 
 var Game = {
     
@@ -35,6 +37,13 @@ var Game = {
         var style = {font: '80px Arial', fill:'#FFFFFF', align: 'center'};
         this.playerOneScore = game.add.text(100,100, score1.toString(), style);
         this.playerTwoScore = game.add.text(520,100, score2.toString(), style);
+        
+        this.wasd = {
+            up: game.input.keyboard.addKey(Phaser.Keyboard.W),
+            down: game.input.keyboard.addKey(Phaser.Keyboard.S),
+            left: game.input.keyboard.addKey(Phaser.Keyboard.A),
+            right: game.input.keyboard.addKey(Phaser.Keyboard.D)
+        }
     },
     
     update: function() {
@@ -45,11 +54,40 @@ var Game = {
         } else { 
             this.paddle1.body.velocity.y = 0;
         }
+        
+        if (this.wasd.up.isDown) {
+            this.paddle2.body.velocity.y = -350;
+        } else if (this.wasd.down.isDown) {
+            this.paddle2.body.velocity.y = 350;
+        } else {
+            this.paddle2.body.velocity.y = 0;
+        }
+        
+        if (this.ball.body.velocity.x > currentVelocity || this.ball.body.velocity.y > currentVelocity) {
+            this.ball.body.velocity.x = currentVelocity;
+            this.ball.body.velocity.y = currentVelocity;
+        }
+        
         game.physics.arcade.collide(this.paddle1, this.ball);
         game.physics.arcade.collide(this.paddle2, this.ball);
     
         if (this.ball.x === 0 || this.ball.x === 615) {
             this.ball.kill();
+        }
+        
+        if (score1 > 9) {
+            if (time > 600) {
+                var bsize = game.rnd.realInRange(-2, 6);
+                this.ball.scale.setTo(bsize, bsize);
+                time = 0;
+            }
+            time++;
+        }
+        
+        if (score1 > 4) {
+            this.ball.body.velocity.x = 500;
+            this.ball.body.velocity.y = 500;
+            currentVelocity = 500;
         }
     },
     
