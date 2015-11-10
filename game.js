@@ -3,13 +3,14 @@ var score2 = 0;
 var flag = false;
 
 var currentVelocity = 200;
-var time = 0;
+var time = 301;
 
 var Game = {
     
     preload : function() {
         game.load.image('paddle1', 'assets/images/paddle.png');
         game.load.image('paddle2', 'assets/images/paddle.png');
+        game.load.image('upperPaddle', 'assets/images/paddle.png');
         game.load.image ('ball', 'assets/images/ball.png');
     },
     
@@ -29,8 +30,8 @@ var Game = {
         
         this.ball = game.add.sprite(300, 240, 'ball');
         game.physics.arcade.enable(this.ball);
-        this.ball.body.velocity.x = 400 * Math.random();
-        this.ball.body.velocity.y = 400 * Math.random();
+        this.ball.body.velocity.x = currentVelocity
+        this.ball.body.velocity.y = currentVelocity;
         this.ball.body.collideWorldBounds = true;
         this.ball.body.bounce.x = 1;
         this.ball.body.bounce.y = 1;
@@ -72,15 +73,23 @@ var Game = {
         game.physics.arcade.collide(this.paddle1, this.ball);
         game.physics.arcade.collide(this.paddle2, this.ball);
     
-        if (this.ball.x <= 0 || this.ball.x >= game.world.width - this.ball.width) {
+        if (this.ball.x <= 0) {
+            score2++;
+            this.ball.reset(300,300);
+            this.ball.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1);
+            this.ball.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1); 
+            this.playerTwoScore.text = score2;
+        }
+            
+        if (this.ball.x >= game.world.width - this.ball.width) {
             score1++;
             this.ball.reset(300,300);
-            this.ball.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1); //make random - or +
-            this.ball.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1); //make random - or +
+            this.ball.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1); 
+            this.ball.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1);
             this.playerOneScore.text = score1;
         }
         
-        if (score1 > 1) {
+        if (score1 + score2 > 5) {
             if (time > 300) {
                 var bsize = game.rnd.realInRange(0.3, 4);
                 console.log(bsize);
@@ -89,10 +98,8 @@ var Game = {
             }
             time++;
         }
-        
-        console.log (this.ball.body.velocity.x);
-        
-        if (score1 > 4) {
+
+        if (score1 + score2 > 10) {
             if (!flag) {
                 currentVelocity = 500;
             flag = true;
