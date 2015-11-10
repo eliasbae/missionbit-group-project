@@ -4,6 +4,7 @@ var score2 = 0;
 var currentVelocity = 200;
 var time = 0;
 
+
 var Game = {
     
     preload : function() {
@@ -44,6 +45,7 @@ var Game = {
             left: game.input.keyboard.addKey(Phaser.Keyboard.A),
             right: game.input.keyboard.addKey(Phaser.Keyboard.D)
         }
+        
     },
     
     update: function() {
@@ -71,9 +73,23 @@ var Game = {
         game.physics.arcade.collide(this.paddle1, this.ball);
         game.physics.arcade.collide(this.paddle2, this.ball);
     
-        if (this.ball.x === 0 || this.ball.x === 615) {
-            this.ball.kill();
+        if (this.ball.x === 615) {
+            score1++;
+            this.ball.body = this.ballReset;
+            this.playerOneScore.text = score1;
+            this.ball.reset(300,300);
+            this.ball.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1);
+            this.ball.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 -1 );
         }
+        if (this.ball.x === 0) {
+            score2++;
+            this.ball.body = this.ballReset;
+            this.playerTwoScore.text = score2;
+            this.ball.reset(300,300);
+            this.ball.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1);
+            this.ball.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 -1 );
+        }
+        
         
         if (score1 > 9) {
             if (time > 600) {
@@ -89,16 +105,17 @@ var Game = {
             this.ball.body.velocity.y = 500;
             currentVelocity = 500;
         }
+
     },
+    
+//    ballReset: function() {
+//            this.ball.reset(300,300);
+//            this.ball.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1);
+//            this.ball.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 -1 );
+//    },
     
     continueGame: function() {
         this.state.start(this.state.current);
-        if (this.ball.x === 615) {
-            score1++;
-        }
-        if (this.ball.x === 0) {
-        score2++;
-        }
     }
 };
   
