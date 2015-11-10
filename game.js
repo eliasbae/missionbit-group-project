@@ -51,19 +51,19 @@ var Game = {
     
     update: function() {
         if (this.cursor.up.isDown) {
-            this.paddle1.body.velocity.y = -350;
+            this.paddle2.body.velocity.y = -350;
         } else if (this.cursor.down.isDown) { 
-            this.paddle1.body.velocity.y = 350;
+            this.paddle2.body.velocity.y = 350;
         } else { 
-            this.paddle1.body.velocity.y = 0;
+            this.paddle2.body.velocity.y = 0;
         }
         
         if (this.wasd.up.isDown) {
-            this.paddle2.body.velocity.y = -350;
+            this.paddle1.body.velocity.y = -350;
         } else if (this.wasd.down.isDown) {
-            this.paddle2.body.velocity.y = 350;
+            this.paddle1.body.velocity.y = 350;
         } else {
-            this.paddle2.body.velocity.y = 0;
+            this.paddle1.body.velocity.y = 0;
         }
         
         if (this.ball.body.velocity.x > currentVelocity || this.ball.body.velocity.y > currentVelocity) {
