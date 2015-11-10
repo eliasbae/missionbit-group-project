@@ -1,5 +1,6 @@
 var score1 = 0;
 var score2 = 0;
+var flag = false;
 
 var currentVelocity = 200;
 var time = 0;
@@ -50,19 +51,19 @@ var Game = {
     
     update: function() {
         if (this.cursor.up.isDown) {
-            this.paddle2.body.velocity.y = -350;
+            this.paddle1.body.velocity.y = -350;
         } else if (this.cursor.down.isDown) { 
-            this.paddle2.body.velocity.y = 350;
+            this.paddle1.body.velocity.y = 350;
         } else { 
-            this.paddle2.body.velocity.y = 0;
+            this.paddle1.body.velocity.y = 0;
         }
         
         if (this.wasd.up.isDown) {
-            this.paddle1.body.velocity.y = -350;
+            this.paddle2.body.velocity.y = -350;
         } else if (this.wasd.down.isDown) {
-            this.paddle1.body.velocity.y = 350;
+            this.paddle2.body.velocity.y = 350;
         } else {
-            this.paddle1.body.velocity.y = 0;
+            this.paddle2.body.velocity.y = 0;
         }
         
         if (this.ball.body.velocity.x > currentVelocity || this.ball.body.velocity.y > currentVelocity) {
@@ -73,6 +74,7 @@ var Game = {
         game.physics.arcade.collide(this.paddle1, this.ball);
         game.physics.arcade.collide(this.paddle2, this.ball);
     
+<<<<<<< HEAD
         if (this.ball.x === 615) {
             score1++;
             this.ball.body = this.ballReset;
@@ -80,6 +82,14 @@ var Game = {
             this.ball.reset(300,300);
             this.ball.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1);
             this.ball.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 -1 );
+=======
+        if (this.ball.x <= 0 || this.ball.x >= game.world.width - this.ball.width) {
+            score1++;
+            this.ball.reset(300,300);
+            this.ball.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1); //make random - or +
+            this.ball.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1); //make random - or +
+            this.playerOneScore.text = score1;
+>>>>>>> origin/master
         }
         if (this.ball.x === 0) {
             score2++;
@@ -91,19 +101,23 @@ var Game = {
         }
         
         
-        if (score1 > 9) {
-            if (time > 600) {
-                var bsize = game.rnd.realInRange(-2, 6);
+        if (score1 > 1) {
+            if (time > 300) {
+                var bsize = game.rnd.realInRange(0.3, 4);
+                console.log(bsize);
                 this.ball.scale.setTo(bsize, bsize);
                 time = 0;
             }
             time++;
         }
         
+        console.log (this.ball.body.velocity.x);
+        
         if (score1 > 4) {
-            this.ball.body.velocity.x = 500;
-            this.ball.body.velocity.y = 500;
-            currentVelocity = 500;
+            if (!flag) {
+                currentVelocity = 500;
+            flag = true;
+            }
         }
 
     },
