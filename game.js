@@ -10,8 +10,9 @@ var Game = {
     preload : function() {
         game.load.image('paddle1', 'assets/images/paddle.png');
         game.load.image('paddle2', 'assets/images/paddle.png');
-        game.load.image('upperPaddle', 'assets/images/paddle.png');
-        game.load.image ('ball', 'assets/images/ball.png');
+        game.load.image('upperPaddle', 'assets/images/paddle2.png');
+        game.load.image ('ball1', 'assets/images/ball.png');
+		 game.load.image ('ball2', 'assets/images/ball.png');
     },
     
     create: function () { 
@@ -27,14 +28,32 @@ var Game = {
         this.paddle2.body.immovable = true;
         this.paddle1.body.collideWorldBounds = true;
         this.paddle2.body.collideWorldBounds = true;
-        
-        this.ball = game.add.sprite(300, 240, 'ball');
-        game.physics.arcade.enable(this.ball);
-        this.ball.body.velocity.x = currentVelocity
-        this.ball.body.velocity.y = currentVelocity;
-        this.ball.body.collideWorldBounds = true;
-        this.ball.body.bounce.x = 1;
-        this.ball.body.bounce.y = 1;
+		
+		this.upperPaddle = game.add.sprite(100, 50, 'upperPaddle');
+		game.physics.arcade.enable(this.upperPaddle);
+		this.upperPaddle.body.immovable = true;
+		this.upperPaddle.body.velocity.x = 350;
+		this.upperPaddle.body.velocity.x = -350;
+		this.upperPaddle.body.collideWorldBounds = true;
+		this.upperPaddle.body.bounce.x = 1;
+		this.upperPaddle.visible = false;
+		
+        this.ball1 = game.add.sprite(300, 240, 'ball');
+        game.physics.arcade.enable(this.ball1);
+        this.ball1.body.velocity.x = currentVelocity
+        this.ball1.body.velocity.y = currentVelocity;
+        this.ball1.body.collideWorldBounds = true;
+        this.ball1.body.bounce.x = 1;
+        this.ball1.body.bounce.y = 1;
+		this.ball1.visible = true;
+		
+		this.ball2 = game.add.sprite(300, 240, 'ball');
+        game.physics.arcade.enable(this.ball2);
+        this.ball2.body.velocity.x = currentVelocity
+        this.ball2.body.velocity.y = currentVelocity;
+        this.ball2.body.bounce.x = 1;
+        this.ball2.body.bounce.y = 1;
+		this.ball2.visible = false;
         
         var style = {font: '80px Arial', fill:'#FFFFFF', align: 'center'};
         this.playerOneScore = game.add.text(100,100, score1.toString(), style);
@@ -46,6 +65,14 @@ var Game = {
             left: game.input.keyboard.addKey(Phaser.Keyboard.A),
             right: game.input.keyboard.addKey(Phaser.Keyboard.D)
         }
+		
+		 this.rfdg = {
+            up: game.input.keyboard.addKey(Phaser.Keyboard.R),
+            down: game.input.keyboard.addKey(Phaser.Keyboard.F),
+            left: game.input.keyboard.addKey(Phaser.Keyboard.D),
+            right: game.input.keyboard.addKey(Phaser.Keyboard.G)
+        }
+		
     },
     
     update: function() {
@@ -64,28 +91,55 @@ var Game = {
         } else {
             this.paddle1.body.velocity.y = 0;
         }
+		
+		if (this.rfdg.left.isDown) {
+			this.upperPaddle.body.velocity.x = -350;
+		} else if (this.rfdg.right.isDown) {
+            this.upperPaddle.body.velocity.x = 350;
+		}
         
-        if (this.ball.body.velocity.x > currentVelocity || this.ball.body.velocity.y > currentVelocity) {
-            this.ball.body.velocity.x = currentVelocity;
-            this.ball.body.velocity.y = currentVelocity;
+        if (this.ball1.body.velocity.x > currentVelocity || this.ball1.body.velocity.y > currentVelocity) {
+            this.ball1.body.velocity.x = currentVelocity;
+            this.ball1.body.velocity.y = currentVelocity;
         }
+		
+		 if (this.ball2.body.velocity.x > currentVelocity || this.ball2.body.velocity.y > currentVelocity) {
+            this.ball2.body.velocity.x = currentVelocity;
+            this.ball2.body.velocity.y = currentVelocity;
+		 }
         
-        game.physics.arcade.collide(this.paddle1, this.ball);
-        game.physics.arcade.collide(this.paddle2, this.ball);
-    
-        if (this.ball.x <= 0) {
+        game.physics.arcade.collide(this.paddle1, this.ball1);
+        game.physics.arcade.collide(this.paddle2, this.ball1);
+		
+        if (this.ball1.x <= 0) {
             score2++;
-            this.ball.reset(300,300);
-            this.ball.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1);
-            this.ball.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1); 
+            this.ball1.reset(300,300);
+            this.ball1.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1);
+            this.ball1.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1); 
+            this.playerTwoScore.text = score2;
+        }
+		
+		if (this.ball2.x <= 0) {
+            score2++;
+            this.ball2.reset(300,300);
+            this.ball2.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1);
+            this.ball2.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1); 
             this.playerTwoScore.text = score2;
         }
             
-        if (this.ball.x >= game.world.width - this.ball.width) {
+        if (this.ball1.x >= game.world.width - this.ball1.width) {
             score1++;
-            this.ball.reset(300,300);
-            this.ball.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1); 
-            this.ball.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1);
+            this.ball1.reset(300,300);
+            this.ball1.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1); 
+            this.ball1.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1);
+            this.playerOneScore.text = score1;
+        }
+		
+		 if (this.ball2.x >= game.world.width - this.ball1.width) {
+            score1++;
+            this.ball2.reset(300,300);
+            this.ball2.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1); 
+            this.ball2.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1);
             this.playerOneScore.text = score1;
         }
         
@@ -93,7 +147,7 @@ var Game = {
             if (time > 300) {
                 var bsize = game.rnd.realInRange(0.3, 4);
                 console.log(bsize);
-                this.ball.scale.setTo(bsize, bsize);
+                this.ball1.scale.setTo(bsize, bsize);
                 time = 0;
             }
             time++;
@@ -105,6 +159,33 @@ var Game = {
             flag = true;
             }
         }
+		
+		if (score1 + score2 > 15) {
+			this.upperPaddle.visible = true;
+			game.physics.arcade.collide(this.upperPaddle, this.ball1);
+
+		}
+		
+		if (score1 + score2 > 15) {
+			this.upperPaddle.visible = true;
+			game.physics.arcade.collide(this.upperPaddle, this.ball2);
+
+		}
+		
+		if (score1 + score2 > 20) {
+			game.physics.arcade.collide(this.paddle1, this.ball2);
+        	game.physics.arcade.collide(this.paddle2, this.ball2);
+			this.ball2.body.collideWorldBounds = true;
+			this.ball2 = game.add.sprite(300, 240, 'ball');
+        	game.physics.arcade.enable(this.ball2);
+        	this.ball2.body.velocity.x = currentVelocity
+        	this.ball2.body.velocity.y = currentVelocity;
+        	this.ball2.body.bounce.x = 1;
+        	this.ball2.body.bounce.y = 1;
+			this.ball2.visible = false;
+        
+    
+		}
 
     },
     
