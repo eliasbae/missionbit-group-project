@@ -119,13 +119,6 @@ var Game = {
             this.playerTwoScore.text = score2;
         }
 		
-		if (this.ball2.x <= 0) {
-            score2++;
-            this.ball2.reset(300,300);
-            this.ball2.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1);
-            this.ball2.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1); 
-            this.playerTwoScore.text = score2;
-        }
             
         if (this.ball1.x >= game.world.width - this.ball1.width) {
             score1++;
@@ -135,13 +128,6 @@ var Game = {
             this.playerOneScore.text = score1;
         }
 		
-		 if (this.ball2.x >= game.world.width - this.ball1.width) {
-            score1++;
-            this.ball2.reset(300,300);
-            this.ball2.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1); 
-            this.ball2.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1);
-            this.playerOneScore.text = score1;
-        }
         
         if (score1 + score2 > 5) {
             if (time > 300) {
@@ -182,7 +168,7 @@ var Game = {
         	this.ball2.body.velocity.y = currentVelocity;
         	this.ball2.body.bounce.x = 1;
         	this.ball2.body.bounce.y = 1;
-			this.ball2.visible = false;
+			this.ball2.visible = true;
         
     
 		}
