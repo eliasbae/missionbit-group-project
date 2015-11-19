@@ -11,7 +11,8 @@ var Game = {
         game.load.image('paddle1', 'assets/images/paddle.png');
         game.load.image('paddle2', 'assets/images/paddle.png');
         game.load.image('upperPaddle', 'assets/images/paddle.png');
-        game.load.image ('ball', 'assets/images/ball.png');
+        game.load.image ('ball1', 'assets/images/ball.png');
+         game.load.image ('ball2', 'assets/images/ball.png');
     },
     
     create: function () { 
