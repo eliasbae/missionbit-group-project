@@ -8,11 +8,10 @@ var time = 301;
 var Game = {
     
     preload : function() {
-        game.load.image('paddle1', 'assets/images/paddle.png');
-        game.load.image('paddle2', 'assets/images/paddle.png');
+        game.load.image('paddle', 'assets/images/paddle.png');
         game.load.image('upperPaddle', 'assets/images/paddle2.png');
         game.load.image ('ball1', 'assets/images/ball.png');
-		 game.load.image ('ball2', 'assets/images/ball.png');
+		game.load.image ('ball2', 'assets/images/ball.png');
     },
     
     create: function () { 
@@ -20,8 +19,8 @@ var Game = {
         
         game.physics.startSystem(Phaser.Physics.ARCADE);
         this.cursor = game.input.keyboard.createCursorKeys();
-        this.paddle1 = game.add.sprite(50, 200, 'paddle1');
-        this.paddle2 = game.add.sprite(570, 200, 'paddle2');
+        this.paddle1 = game.add.sprite(50, 200, 'paddle');
+        this.paddle2 = game.add.sprite(570, 200, 'paddle');
         game.physics.arcade.enable(this.paddle1);
         game.physics.arcade.enable(this.paddle2);
         this.paddle1.body.immovable = true;
@@ -38,7 +37,7 @@ var Game = {
 		this.upperPaddle.body.bounce.x = 1;
 		this.upperPaddle.visible = false;
 		
-        this.ball1 = game.add.sprite(300, 240, 'ball');
+        this.ball1 = game.add.sprite(300, 240, 'ball1');
         game.physics.arcade.enable(this.ball1);
         this.ball1.body.velocity.x = currentVelocity
         this.ball1.body.velocity.y = currentVelocity;
@@ -47,10 +46,11 @@ var Game = {
         this.ball1.body.bounce.y = 1;
 		this.ball1.visible = true;
 		
-		this.ball2 = game.add.sprite(300, 240, 'ball');
+		this.ball2 = game.add.sprite(300, 240, 'ball2');
         game.physics.arcade.enable(this.ball2);
         this.ball2.body.velocity.x = currentVelocity
         this.ball2.body.velocity.y = currentVelocity;
+		this.ball2.body.collideWorldBounds = true;
         this.ball2.body.bounce.x = 1;
         this.ball2.body.bounce.y = 1;
 		this.ball2.visible = false;
@@ -138,6 +138,17 @@ var Game = {
             }
             time++;
         }
+		
+		 if (score1 + score2 > 5) {
+            if (time > 300) {
+                var bsize = game.rnd.realInRange(0.3, 4);
+                console.log(bsize);
+                this.ball2.scale.setTo(bsize, bsize);
+                time = 0;
+            }
+            time++;
+        }
+
 
         if (score1 + score2 > 10) {
             if (!flag) {
@@ -149,28 +160,32 @@ var Game = {
 		if (score1 + score2 > 15) {
 			this.upperPaddle.visible = true;
 			game.physics.arcade.collide(this.upperPaddle, this.ball1);
-
-		}
-		
-		if (score1 + score2 > 15) {
-			this.upperPaddle.visible = true;
 			game.physics.arcade.collide(this.upperPaddle, this.ball2);
 
 		}
 		
-		if (score1 + score2 > 20) {
+		if (score1 + score2 > 5) {
+			this.ball2.visible = true;
 			game.physics.arcade.collide(this.paddle1, this.ball2);
         	game.physics.arcade.collide(this.paddle2, this.ball2);
-			this.ball2.body.collideWorldBounds = true;
-			this.ball2 = game.add.sprite(300, 240, 'ball');
-        	game.physics.arcade.enable(this.ball2);
-        	this.ball2.body.velocity.x = currentVelocity
-        	this.ball2.body.velocity.y = currentVelocity;
-        	this.ball2.body.bounce.x = 1;
-        	this.ball2.body.bounce.y = 1;
-			this.ball2.visible = true;
-        
-    
+			
+			if (this.ball2.x <= 0) {
+          		score2++;
+           		this.ball2.reset(300,300);
+            	this.ball2.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1);
+            	this.ball2.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1); 
+            	this.playerTwoScore.text = score2;
+        	}
+		
+            
+        	if (this.ball2.x >= game.world.width - this.ball2.width) {
+            	score1++;
+            	this.ball2.reset(300,300);
+            	this.ball2.body.velocity.x = currentVelocity * (Math.round(Math.random()) * 2 - 1); 
+            	this.ball2.body.velocity.y = currentVelocity * (Math.round(Math.random()) * 2 - 1);
+            	this.playerOneScore.text = score1;
+        	}
+		
 		}
 
     },
