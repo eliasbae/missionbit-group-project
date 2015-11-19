@@ -11,8 +11,13 @@ var Game = {
         game.load.image('paddle1', 'assets/images/paddle.png');
         game.load.image('paddle2', 'assets/images/paddle.png');
         game.load.image('upperPaddle', 'assets/images/paddle.png');
+<<<<<<< HEAD
         game.load.image ('ball1', 'assets/images/ball.png');
          game.load.image ('ball2', 'assets/images/ball.png');
+=======
+        game.load.image ('ball', 'assets/images/ball.png');
+        game.load.image('blackout', 'assets/images/blackout.jpg');
+>>>>>>> origin/master
     },
     
     create: function () { 
@@ -28,6 +33,9 @@ var Game = {
         this.paddle2.body.immovable = true;
         this.paddle1.body.collideWorldBounds = true;
         this.paddle2.body.collideWorldBounds = true;
+        
+        this.blackout = game.add.sprite(0,0, 'blackout');
+        this.blackout.visible = false;
         
         this.ball = game.add.sprite(300, 240, 'ball');
         game.physics.arcade.enable(this.ball);
@@ -106,11 +114,23 @@ var Game = {
             flag = true;
             }
         }
+            
+        if (score1 + score2 > 20) {
+			this.blackout.visible = false;
+            if (time > 30) {
+                this.blackout.visible = true;
+                { if (time > 60)
+                {
+                time = 0;}
+                }
+            }
+        }
 
     },
     
     continueGame: function() {
         this.state.start(this.state.current);
     }
+        
 };
   
