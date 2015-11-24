@@ -179,9 +179,9 @@ var Game = {
 
         if (score1 + score2 > 20) {
             this.blackout.visible = false;
-            if (time > 30) {
+            if (time > 120) {
                 this.blackout.visible = true;
-                { if (time > 60)
+                { if (time > 240)
                 {
                 time = 0;}
                 }
