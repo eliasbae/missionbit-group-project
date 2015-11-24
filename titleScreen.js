@@ -13,7 +13,7 @@ var TitleScreen = {
         this.add.image(576, 0, 'titleImage');
         this.add.image(576, 416, 'titleImage');
         this.add.image(0, 416, 'titleImage');
-        this.add.image(190, 0, 'titleText');
+        this.add.image(120, 0, 'titleText');
         this.add.button(290, 250, 'optionsTitle', this.options, this);
         this.add.button(290, 150, 'startTitle', this.startGame, this);
         this.add.button(290, 350, 'titleHelp', this.help, this);

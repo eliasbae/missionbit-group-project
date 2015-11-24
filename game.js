@@ -191,7 +191,11 @@ var Game = {
     },
 
     continueGame: function() {
+        score1 = 0;
+        score2 = 0;
         this.state.start(this.state.current);
+        this.playerOneScore.text = score1;
+        this.playerTwoScore.text = score2;
     }
 
 };
