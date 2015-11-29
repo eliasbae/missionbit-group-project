@@ -4,6 +4,7 @@ var flag = false;
 
 var currentVelocity = 200;
 var time = 301;
+var time2 = 121;
 
 var Game = {
 
@@ -179,13 +180,13 @@ var Game = {
 
         if (score1 + score2 > 20) {
             this.blackout.visible = false;
-            if (time > 120) {
+            if (time2 > 120) {
                 this.blackout.visible = true;
-                { if (time > 240)
-                {
-                time = 0;}
+                if (time2 > 240) {
+                    time2 = 0;
                 }
             }
+            time2++;
         }
 
     },
