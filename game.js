@@ -200,7 +200,7 @@ var Game = {
         
             
         
-        if (score1 + score2 > 5) {
+        if (score1 + score2 > 20) {
             if (!flagEnding){
                 flag50 = true;
                 this.blackout.visible = false;
@@ -235,8 +235,8 @@ var Game = {
      newBall: function() {
         this.ball3 = game.add.sprite (600, -740, 'ball3', this.endingBall);
                 game.physics.arcade.enable(this.ball3);
-                this.ball3.body.velocity.x = currentVelocity * Math.floor(Math.random() * 3) + 3  ; 
-                this.ball3.body.velocity.y = currentVelocity * Math.floor(Math.random() * 3) + 3  ; 
+                this.ball3.body.velocity.x = currentVelocity + Math.floor(Math.random() * 100) + 3  ; 
+                this.ball3.body.velocity.y = currentVelocity + Math.floor(Math.random() * 100) + 3 ; 
                 this.ball3.body.collideWorldBounds = true;
                 this.ball3.body.bounce.x = 1;
                 this.ball3.body.bounce.y = 1;
