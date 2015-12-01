@@ -10,6 +10,8 @@ game.state.add('TitleScreen', TitleScreen);
 //adds Options state to game
 game.state.add('Options', Options)
 
+game.state.add('Help', Help);
+
 //adds Game state to game
 game.state.add('Game', Game);
 

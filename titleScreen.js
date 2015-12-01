@@ -24,9 +24,13 @@ var TitleScreen = {
         //begins the Options state
         this.state.start('Options');
     },
+    
+    help: function() {
+        this.state.start('Help'); 
+    },
 
     startGame: function() {
         this.state.start('Game');
-    }
+    },
     
 };

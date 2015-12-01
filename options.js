@@ -1,9 +1,8 @@
 var Options = {
     
-    preload : function() {
+    preload: function() {
         game.load.image('optionsTitle', '/assets/images/imageedit_1_5623684860.png');
         game.load.image('returnTitle', '/assets/images/rsz_backt.png');
-        game.load.image('startTitle', '/assets/images/start.jpg');
     },
     
     create: function () { 
