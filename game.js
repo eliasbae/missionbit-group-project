@@ -1,6 +1,8 @@
 var score1 = 0;
 var score2 = 0;
 var flag = false;
+var flag50 = false;
+var flagEnding = false;
 
 var currentVelocity = 200;
 var time = 301;
@@ -13,6 +15,7 @@ var Game = {
         game.load.image('upperPaddle', 'assets/images/paddle2.png');
         game.load.image ('ball1', 'assets/images/ball.png');
         game.load.image ('ball2', 'assets/images/ball2.png');
+        game.load.image ('ball3', 'assets/images/ball3.png');
         game.load.image('blackout', 'assets/images/blackout.jpg');
     },
 
@@ -87,6 +90,8 @@ var Game = {
         } else {
             this.paddle1.body.velocity.y = 0;
         }
+        
+        if (!flag50) {
 
        if (this.ball1.body.velocity.x > currentVelocity || this.ball1.body.velocity.y > currentVelocity) {
             this.ball1.body.velocity.x = currentVelocity;
@@ -146,7 +151,7 @@ var Game = {
             }
         }
 
-                if (score1 + score2 > 15) {
+        if (score1 + score2 > 15) {
             this.upperPaddle.visible = true;
             game.physics.arcade.collide(this.upperPaddle, this.ball1);
             game.physics.arcade.collide(this.upperPaddle, this.ball2);
@@ -179,20 +184,56 @@ var Game = {
 
 
         if (score1 + score2 > 20) {
-            this.blackout.visible = false;
-            if (time2 > 120) {
-                this.blackout.visible = true;
-                if (time2 > 240) {
-                    time2 = 0;
+                this.blackout.visible = false;
+                if (time2 > 120) {
+                    this.blackout.visible = true;
+                    if (time2 > 240) {
+                        time2 = 0;
+                    }
                 }
-            }
-            time2++;
+                time2++;
         }
+            
+        }
+        
+        if (score1 + score2 > 20) {
+            console.log(!flagEnding);
+           if (!flagEnding) {
+                console.log("here");
+                flag50 = true;
+                this.blackout.visible = false;
+                this.ball2.kill();
+                this.upperPaddle.kill();
+                this.ball1.kill();
+
+//                  if (!flagEnding){
+//                for (var i = 1; i < score1 + 1; i++) {
+                    game.add.sprite(50, 50, 'ball3', 0, this.ballEnding);
+//                }
+//                game.add.sprite(300, 240, 'ball3');
+//                game.physics.arcade.enable(this.ball3);
+//                     this.ball3.body.velocity.x = currentVelocity
+//                this.ball3.body.velocity.y = currentVelocity;
+//                this.ball3.body.collideWorldBounds = true;
+//                this.ball3.body.bounce.x = 1;
+//                this.ball3.body.bounce.y = 1;
+//                this.ball3.visible = true;
+//                
+               flagEnding = true;
+                 
+           }
+            
+        }
+            
 
     },
 
     continueGame: function() {
         this.state.start(this.state.current);
+        score1 = 0;
+        score2 = 0;
+        this.playerOneScore.text = score1;
+        this.playerTwoScore.text = score2;
     }
 
 };
