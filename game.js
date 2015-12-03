@@ -67,6 +67,7 @@ var Game = {
         var style = {font: '80px Arial', fill:'#FFFFFF', align: 'center'};
         this.playerOneScore = game.add.text(100,100, score1.toString(), style);
         this.playerTwoScore = game.add.text(520,100, score2.toString(), style);
+        this.endingScore = game.add.text(25,100, "", style);
 
         this.wasd = {
             up: game.input.keyboard.addKey(Phaser.Keyboard.W),
@@ -146,21 +147,21 @@ var Game = {
             time++;
         }
 
-        if (score1 + score2 > 10) {
+        if (score1 + score2 > 9) {
             if (!flag) {
                 currentVelocity = 500;
             flag = true;
             }
         }
 
-        if (score1 + score2 > 15) {
+        if (score1 + score2 > 4) {
             this.upperPaddle.visible = true;
             game.physics.arcade.collide(this.upperPaddle, this.ball1);
             game.physics.arcade.collide(this.upperPaddle, this.ball2);
 
         }
 
-                if (score1 + score2 > 5) {
+                if (score1 + score2 > 14) {
             this.ball2.visible = true;
             game.physics.arcade.collide(this.paddle1, this.ball2);
             game.physics.arcade.collide(this.paddle2, this.ball2);
@@ -185,7 +186,7 @@ var Game = {
         }
 
 
-        if (score1 + score2 > 20) {
+        if (score1 + score2 > 19) {
                 this.blackout.visible = false;
                 if (time2 > 120) {
                     this.blackout.visible = true;
@@ -200,7 +201,7 @@ var Game = {
         
             
         
-        if (score1 + score2 > 20) {
+        if (score1 + score2 > 29) {
             if (!flagEnding){
                 flag50 = true;
                 this.blackout.visible = false;
@@ -214,11 +215,22 @@ var Game = {
                     this.newBall();
                 }
                 
+                this.playerOneScore.text = "";
+                this.playerTwoScore.text = "";
+                
+                    if (score1 > score2) {
+                        this.endingScore.text = "PLAYER 1 WINS"
+                    }
+                    if (score2 > score1) {
+                        this.endingScore.text = "PLAYER 2 WINS"}
+                    if (score2 === score1) {
+                        this.endingScore.text = "BOTH PLAYERS LOSE"}
                 flagEnding = true;
                  
             }
             
         }
+            
 
     },
 
@@ -230,7 +242,7 @@ var Game = {
         this.playerOneScore.text = score1;
         this.playerTwoScore.text = score2;
         
-        flagEnding = false
+        flagEnding = false;
     },
      newBall: function() {
         this.ball3 = game.add.sprite (600, -740, 'ball3', this.endingBall);
@@ -240,6 +252,8 @@ var Game = {
                 this.ball3.body.collideWorldBounds = true;
                 this.ball3.body.bounce.x = 1;
                 this.ball3.body.bounce.y = 1;
+
+
          
     }
 
