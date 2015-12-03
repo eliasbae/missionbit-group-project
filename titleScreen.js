@@ -27,6 +27,9 @@ var TitleScreen = {
 
     startGame: function() {
         this.state.start('Game');
-    }
+    },
     
+    help: function() {
+        this.state.start('Help');
+    },
 };

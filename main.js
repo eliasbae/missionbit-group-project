@@ -13,6 +13,8 @@ game.state.add('Options', Options)
 //adds Game state to game
 game.state.add('Game', Game);
 
+game.state.add('Help', Help);
+
 //to add more states
 //game.state.add('what the state will be named', the object that the state is contained within)
 
