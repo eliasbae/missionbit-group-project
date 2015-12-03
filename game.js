@@ -243,6 +243,8 @@ var Game = {
         this.playerTwoScore.text = score2;
         
         flagEnding = false;
+        flag = false;
+        flag50 = false;
     },
      newBall: function() {
         this.ball3 = game.add.sprite (600, -740, 'ball3', this.endingBall);
