@@ -62,6 +62,8 @@ var Game = {
         this.ball2.body.bounce.y = 1;
         this.ball2.visible = false;
 
+        this.endingBall = game.add.group();
+        
         var style = {font: '80px Arial', fill:'#FFFFFF', align: 'center'};
         this.playerOneScore = game.add.text(100,100, score1.toString(), style);
         this.playerTwoScore = game.add.text(520,100, score2.toString(), style);
@@ -124,7 +126,7 @@ var Game = {
             this.playerOneScore.text = score1;
         }
 
-        if (score1 + score2 > 5) {
+        if (score1 + score2 > 20) {
             if (time > 300) {
                 var bsize = game.rnd.realInRange(0.3, 4);
                 console.log(bsize);
@@ -196,44 +198,49 @@ var Game = {
             
         }
         
+            
+        
         if (score1 + score2 > 20) {
-            console.log(!flagEnding);
-           if (!flagEnding) {
-                console.log("here");
+            if (!flagEnding){
                 flag50 = true;
                 this.blackout.visible = false;
                 this.ball2.kill();
                 this.upperPaddle.kill();
                 this.ball1.kill();
 
-//                  if (!flagEnding){
-//                for (var i = 1; i < score1 + 1; i++) {
-                    game.add.sprite(50, 50, 'ball3', 0, this.ballEnding);
-//                }
-//                game.add.sprite(300, 240, 'ball3');
-//                game.physics.arcade.enable(this.ball3);
-//                     this.ball3.body.velocity.x = currentVelocity
-//                this.ball3.body.velocity.y = currentVelocity;
-//                this.ball3.body.collideWorldBounds = true;
-//                this.ball3.body.bounce.x = 1;
-//                this.ball3.body.bounce.y = 1;
-//                this.ball3.visible = true;
-//                
-               flagEnding = true;
+
+                for (var i = 1; i < score1 + 1; i++) {
+                    console.log(i);
+                    this.newBall();
+                }
+                
+                flagEnding = true;
                  
-           }
+            }
             
         }
-            
 
     },
 
+    
     continueGame: function() {
         this.state.start(this.state.current);
         score1 = 0;
         score2 = 0;
         this.playerOneScore.text = score1;
         this.playerTwoScore.text = score2;
+        
+        flagEnding = false
+    },
+     newBall: function() {
+        this.ball3 = game.add.sprite (600, -740, 'ball3', this.endingBall);
+                game.physics.arcade.enable(this.ball3);
+                this.ball3.body.velocity.x = currentVelocity + Math.floor(Math.random() * 100) + 3  ; 
+                this.ball3.body.velocity.y = currentVelocity + Math.floor(Math.random() * 100) + 3 ; 
+                this.ball3.body.collideWorldBounds = true;
+                this.ball3.body.bounce.x = 1;
+                this.ball3.body.bounce.y = 1;
+         
     }
 
 };
