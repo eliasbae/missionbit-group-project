@@ -8,10 +8,13 @@ var game = new Phaser.Game(640, 480, Phaser.AUTO, 'gameDiv');
 game.state.add('TitleScreen', TitleScreen);
 
 //adds Options state to game
-game.state.add('Options', Options)
 
 //adds Game state to game
 game.state.add('Game', Game);
+
+game.state.add('Help', Help);
+
+game.state.add('Credits', Credits);
 
 //to add more states
 //game.state.add('what the state will be named', the object that the state is contained within)
