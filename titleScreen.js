@@ -2,7 +2,7 @@ var TitleScreen = {
     
     preload : function() {
         game.load.image('startTitle', '/assets/images/rsz_1rsz_play.png');
-        game.load.image('titleImage', '/assets/images/missionbit 2.png');
+        game.load.image('titleImage', '/assets/images/transmissionbit.png');
         game.load.image('titleText', '/assets/images/title.jpg');
         game.load.image('titleHelp', '/assets/images/rsz_help.png');
         game.load.image('titleCredit', '/assets/images/credits.png');
